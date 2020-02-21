@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "midi.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,11 +92,11 @@ int main(void)
   MX_ADC1_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-  	unsigned int counter = 0;
-	char data[7];
+  MIDI_msg_TypeDef msg = {0};
+  msg.status = 65;
+  msg.data1 = 66;
+  msg.data2 = 67;
   /* USER CODE END 2 */
- 
- 
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -104,12 +104,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		itoa(counter, data, 10);
-		strcat(data, "\n\r");
-		CDC_Transmit_FS(&data, sizeof(data));
-		HAL_Delay(10);
+		MIDI_send(&msg);
+		HAL_Delay(1000);
 		HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-		counter++;
 	}
   /* USER CODE END 3 */
 }
