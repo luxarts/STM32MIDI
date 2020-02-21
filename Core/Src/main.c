@@ -23,6 +23,7 @@
 #include "adc.h"
 #include "usb_device.h"
 #include "gpio.h"
+#include "usbd_cdc_if.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -90,6 +91,7 @@ int main(void) {
 	MX_USB_DEVICE_Init();
 	/* USER CODE BEGIN 2 */
 
+	char data[]="hola\n";
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -97,7 +99,8 @@ int main(void) {
 	while (1) {
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
-
+		CDC_Transmit_FS(&data, sizeof(data));
+		HAL_Delay(1000);
 	}
 	/* USER CODE END 3 */
 }
