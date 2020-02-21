@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "midi.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -80,6 +80,7 @@ int main(void) {
 
 	/* Configure the system clock */
 	SystemClock_Config();
+
 	/* USER CODE BEGIN SysInit */
 
 	/* USER CODE END SysInit */
@@ -89,7 +90,7 @@ int main(void) {
 	MX_ADC1_Init();
 	MX_USB_DEVICE_Init();
 	/* USER CODE BEGIN 2 */
-
+	uint8_t value = 0;
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -97,7 +98,12 @@ int main(void) {
 	while (1) {
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
+		MIDI_control(0, 10, value);
+		value++;
+		if(value==128)value=0;
 
+		HAL_Delay(1000);
+		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
 	}
 	/* USER CODE END 3 */
 }
