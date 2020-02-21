@@ -21,7 +21,7 @@ void MIDI_send(MIDI_msg_TypeDef *msg){
 	}
 }
 void MIDI_note(uint8_t channel, uint8_t note, uint8_t velocity, uint8_t status){
-	static MIDI_msg_TypeDef msg = {0};
+	MIDI_msg_TypeDef msg = {0};
 
 	if(status){
 		msg.type = STATUS_NOTE_ON;
@@ -33,6 +33,16 @@ void MIDI_note(uint8_t channel, uint8_t note, uint8_t velocity, uint8_t status){
 
 	msg.channel = channel;
 	msg.data1 = note;
+
+	MIDI_send(&msg);
+}
+void MIDI_control(uint8_t channel, uint8_t control, uint8_t value){
+	MIDI_msg_TypeDef msg = {0};
+
+	msg.type = STATUS_CC;
+	msg.channel = channel;
+	msg.data1 = control;
+	msg.data2 = value;
 
 	MIDI_send(&msg);
 }

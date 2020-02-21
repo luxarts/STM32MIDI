@@ -24,5 +24,6 @@ typedef struct{
 
 void MIDI_send(MIDI_msg_TypeDef *msg);
 void MIDI_note(uint8_t channel, uint8_t note, uint8_t velocity, uint8_t status);
+void MIDI_control(uint8_t channel, uint8_t control, uint8_t value);
 
 #endif /* INC_MIDI_H_ */

@@ -90,7 +90,7 @@ int main(void) {
 	MX_ADC1_Init();
 	MX_USB_DEVICE_Init();
 	/* USER CODE BEGIN 2 */
-
+	uint8_t value = 0;
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -98,16 +98,12 @@ int main(void) {
 	while (1) {
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
-		// Note ON
+		MIDI_control(0, 10, value);
+		value++;
+		if(value==128)value=0;
 
-		MIDI_note(0, 0x3B, 0xFF, 1);
 		HAL_Delay(1000);
 		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-
-		// Note OFF
-		MIDI_note(0, 0x3B, 0xFF, 0);
-		HAL_Delay(1000);
-		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
 	}
 	/* USER CODE END 3 */
 }
