@@ -27,6 +27,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "midi.h"
+#include "utils.h"
+#include "pot.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,7 +92,7 @@ int main(void) {
 	MX_ADC1_Init();
 	MX_USB_DEVICE_Init();
 	/* USER CODE BEGIN 2 */
-	uint8_t value = 0;
+	HAL_ADCEx_Calibration_Start(&hadc1);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -98,12 +100,11 @@ int main(void) {
 	while (1) {
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
-		MIDI_control(0, 10, value);
-		value++;
-		if(value==128)value=0;
-
-		HAL_Delay(1000);
-		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+		if(Pot_checkChanged(0)){
+			MIDI_control(0, 10, Pot_getValue(0));
+			HAL_Delay(20);
+			HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		}
 	}
 	/* USER CODE END 3 */
 }
